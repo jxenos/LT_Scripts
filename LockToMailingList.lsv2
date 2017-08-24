@@ -1,0 +1,10 @@
+<<New Object $tactic>>
+<<New Text $boundMailingList>>
+<<$tactic..@Is(926127360)>>
+
+Name:<<$tactic.."Formatted Name">></br>
+
+<<$tactic..@SetField($Name="Lock to Mailing List", $Value="[Entity]Prospects")>>
+<<$tactic..@GetFieldValue($Name="Lock to Mailing List", $Value=$boundMailingList)>>
+
+Bound Mailing List:<<$boundMailingList>>|
