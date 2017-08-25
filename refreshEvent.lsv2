@@ -1,0 +1,5 @@
+<<New Number $eventId>>
+<<$eventId = 2698521>>
+
+<<@SetEventElement($eventId,"Scheduled",@Now)>>
+<<@ResetEvent($eventId)>>
