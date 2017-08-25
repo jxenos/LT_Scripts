@@ -18,8 +18,12 @@
   $Description = "test traffic event",
   $URLParams = "",
   $Error = $error,
-  $Event = $event
+  $Event = $event,
+  $Priority = 9999
 )>>
+
+<<@SetEventElement($event,"Priority",9999)>>
+
 event:
 <textarea>
 <<$event>>
