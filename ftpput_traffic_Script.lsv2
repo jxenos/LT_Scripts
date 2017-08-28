@@ -1,0 +1,125 @@
+<<Parameters>>
+  <<New Object $Job>>
+  <<New Object $Result>>
+
+  <<New Text $ErrorMessage>>
+  <<New Text $Success>>
+<</Parameters>>
+
+<<New Object $buildItem>>
+<<New Object $directMailFiles>>
+<<New Object $copy>>
+<<New Object $creative>>
+<<New Object $driSplit>>
+<<New Object $ftpObject>>
+<<New Object $ftpSettings>>
+<<New Object $file>>
+<<New Object $fileAsset>>
+<<New Object $partialList>>
+<<New Object $recipients>>
+<<New Object $uploadCheck>>
+
+<<New Text $activeUserEmail>>
+<<//New Text $copy>>
+<<New Text $emailBody>>
+<<New Text $filename>>
+<<New Text $partialListEnabled>>
+<<//New Text $recipients>>
+
+<<New Number $i>>
+<<New Object $temp>>
+<<//@Traffic(ByFTP)>>
+
+ <<//debug>>
+ <<New Object $id>>
+ <<$id..id=951121812>>
+ <<$directMailFiles..@Object_NewArrayField("Files")>>
+ <<$directMailFiles..Files..@Append($Id)>>
+ <<$directMailFiles..Success = "true">>
+
+
+
+
+<<$ftpObject..@Is(940818456)>>
+<<$ftpObject..@GetFieldValues($Fields="URL||Username||Password||Subject||Response Body||Email Address||Administrator Email Address", $Results=$ftpSettings)>>
+<<If:noPdf (@AsText($directMailFiles..Success) <> "true")>>
+  <<do $Job..@SetField($Field = "Status", $Value = "Failed")>>
+  <<$ErrorMessage="PDF Failed to Generate">>
+  <<@ExitAction(123, $ErrorMessage)>>
+<</If:noPdf>>
+
+<<//FTPPUT>>
+<<//save both upload checks >>
+<<$uploadCheck..@Object_NewArrayField("File")>>
+
+<<$file..@Is($directMailFiles..Files..(1)..Id)>>
+
+<<//$temp..result = $file..("Asset")..@FTPPUT(@AsText($ftpSettings.."URL")..@Trim(), @AsText($ftpSettings.."Username")..@Trim(), @AsText($ftpSettings.."Password")..@Trim(), "/IN_LIVETECH/INCOMING/IMAGING/WESTALLIS/" + @AsText($file..Asset.."FileName"))>>
+<<$temp..result = $file..("Asset")..@FTPPUT(@AsText($ftpSettings.."URL")..@Trim(), @AsText($ftpSettings.."Username")..@Trim(), @AsText($ftpSettings.."Password")..@Trim(), "/" + @AsText($file..Asset.."FileName"))>>
+<<$temp..name = @AsText($file..Asset.."FileName")>>
+<<$uploadCheck..File..@Append($temp)>>
+
+
+
+<<//$Sys..Account..@Id..@GetFieldValue($Name="Email", $Value = $activeUserEmail)>>
+<<//"<br><br><br>User: " + $SYS..Account..@Id + >>
+<<$This..@SendEmail(
+    $To = "jxenos@Livetechnology.com",
+    $Subject = "TrafficByFTP debug email",
+    $From = "support@livetechnology.com",
+    $HTML = "<pre><br>This: " + $This..@Id +
+    "<br>User: *" + $ftpSettings.."Username" + "|" +
+    "<br>Password: *" + $ftpSettings.."Password" + "|" +
+    "<br>host: *" + $ftpSettings.."URL" + "|" +
+    "<br>FTPobject: " + $FtpObject..Id +
+    "<br>directMailFiles: " + @ToJson($directMailFiles) +
+    "<br>ErrorMessage: " + $ErrorMessage +
+    "<br>FileId1: " + $directMailFiles..Files..(1)..Id +
+    "<br>Filename1: " + $uploadCheck..File..(1)..name +
+    "<br>UploadCheck1: " + $uploadCheck..File..(1)..result +
+    "<br>FileId2OffMadeObject: " + $file..Id +
+    "<br>partialListEnabled: " + $partialListEnabled +
+    "<br>Email List: " +  @AsText($ftpSettings.."Email Address") +
+    "<br>Administrator Email List: " +  @AsText($ftpSettings.."Administrator Email Address") +
+    "<br>Sys..User..Id: " +  @AsText($SYS..User..@Id)  +
+    "<br>Sys..User..Email Address: " +  @AsText($SYS..User.."Email Address") +
+    "<br>Sys..Account..Id: " +  @AsText($SYS..Account..@Id)  +
+    "<br>Sys..Account..Email Address: " +  @AsText($SYS..Account.."Email Address") +
+    "<br>mode: " + @URL_Mode +
+    "<br>timestamp: " + @Format_DateTime(@Now, "YYYY-MM-DD HH:NN:SS.ZZZ") +
+    "<br><br></pre>"
+)>>
+
+
+
+<</*
+
+
+
+<<New Object $directMailFiles>>
+<<New Object $id>>
+<<New Object $id2>>
+<<New Object $file>>
+<<New Number $i>>
+<<$directMailFiles..@Object_NewArrayField("Files")>>
+<<$id..id = 943167817>>
+<<$id..name = "942981893-201707241655.pdf">>
+<<$directMailFiles..Files..@Append($id)>>
+<<$id2..id = 943167825>>
+<<$id2..name = "942981893-201707241655.csv">>
+<<$directMailFiles..Files..@Append($id2)>>
+<<$directMailFiles..Success = "true">>
+
+<<$directMailFiles..Files..(1)..Id>>||</br>
+<<$directMailFiles..Files..(2)..Id>>||
+
+
+<<For:upload Var=$i Start=1 End=$directMailFiles..@Length>>
+
+  <<$file..@Is($directMailFiles..Files..($i)..Id)>>
+  <<//upload both parts of the file>>
+  <<//$uploadCheck = $file..("Asset")..@FTPPUT($ftpSettings.."URL", $ftpSettings.."Username", $ftpSettings.."Password", "/" + $file..Asset.."FileName")>>
+  <<$file..("Asset")..@FTPPUT("ftp.liveplatform.com", "jjtest", "JJteam2", "/" + $directMailFiles..Files..($i)..name)>>
+<</For:upload>>
+
+ */>>
