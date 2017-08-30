@@ -1,0 +1,32 @@
+<<New Object $obj>>
+<<$obj..@Is(951131527)>>
+<<$obj..id>>
+<<New Text $error>>
+<<New Number $event>>
+<<New Text $context>>
+
+<<//$context = "Traffic.do">>
+<<$context = "BUILDDIRECTMAILFILES.do">>
+
+<<$obj..@SetEvent(
+  $Context = $context,
+  $Time = @Now,
+  $Email = "jxenos@livetechnology.com",
+  $GroupCode = 100043,
+  $Timeout = 600,
+  $Reschedule = "N",
+  $Description = "test traffic event",
+  $URLParams = "count=1",
+  $Error = $error,
+  $Event = $event,
+  $Priority = 9999
+)>>
+
+<<@SetEventElement($event,"Priority",9999)>>
+
+event:
+<textarea>
+<<$event>>
+</textarea>
+</br>
+err:<<$error>>

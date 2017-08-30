@@ -1,0 +1,31 @@
+<</*
+    var el = document.getElementsByClassName("main")[0]
+    var tbl = el.children[0]
+    var rows = tbl.children
+   var processRows = function(r) {
+  var row, badevents = [];
+  for(var i = 0; i < r.length; i++) {
+    row = r[i];
+    if(row.children[15].innerText.toLowerCase().indexOf("createandlink") !== -1 && (row.children[15].innerText.toLowerCase().indexOf("dev") !== -1 || row.children[15].innerText.toLowerCase().indexOf("qa") !== -1 || row.children[15].innerText.toLowerCase().indexOf("prerelease") !== -1)) {
+      badevents.push({ "Id": row.children[1].innerText, "URL": row.children[15].innerText});
+    }
+  }
+  return badevents;
+}
+var pr = processRows(rows)
+JSON.stringify(pr)
+
+*/>>
+<<New Text $data="'"'>>
+
+<<New Object $json>>
+
+<<@JSON_ToObject($json, $data)>>
+
+<<New Number $i>>
+
+<<For:Events Var=$i Start=1 End=$json..@Length>>
+
+<<$i>> - <<$json..($i)..Id>> -- <<$json..($i)..URL>> <br>
+ <<// @DisableEvent(@ToNum($json..($i)..Id))>>
+<</For:Events>>

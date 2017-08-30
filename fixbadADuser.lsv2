@@ -1,0 +1,116 @@
+<<New Object $obj>>
+
+<<New Text $accountName>>
+<<New Text $destinationRedirect>>
+<<New Text $exprt>>
+<<New Text $exprt1>>
+<<New Text $protocol>>
+<<New Text $preAuthRedir>>
+<<New Text $redirect>>
+<<New Text $sessionStatus>>
+<<New Text $query>>
+<<New Text $query1>>
+
+<<New Object $account>>
+<<New Object $accountsCloud>>
+<<New Object $dri>>
+<<New Object $enterpriseObject>>
+<<New Object $items>>
+<<New Object $items1>>
+<<New Object $system>>
+<<New Object $user>>
+<<New Object $usersCloud>>
+<<New Object $userId>>
+<<New Object $userIntersection>>
+
+<<New Number $authenticationStatus>>
+<<New Number $i>>
+<<New Number $intersectionId = 0>>
+
+<<$obj..@is(699621494)>>
+
+<<$query1="''
+Get Object.."Formatted Name"
+where Link == "~~AD User~~"
+Export as JSON
+"'>>
+
+<<$obj..@Get($items1, $exprt1, $query1)>>
+
+<<$items1..@length()>>
+<<For:users Var=$i Start=1 End=$items1.@Length>>
+<<//For:users Var=$i Start=1 End=60>>
+<<//For:users Var=$i Start=61 End=120>>
+<<//For:users Var=$i Start=121 End=180>>
+<<//For:users Var=$i Start=181 End=$items1.@Length>>
+<textarea>
+<<$items1..($i)..object..id>>
+</textarea>
+
+  <<$enterpriseObject..@Is($This..Id)>>
+  <<$user..@Is($items1..($i)..object..id)>>
+  <<$system..@Is(881575420)>>
+
+  <<$query="'
+  Get Object.."Formatted Name"
+  where Link == "~~User~~" AND
+  Object..@Id == "' + $user..id + "''
+  Export as JSON
+  "'>>
+
+  <<$enterpriseObject..@Get($items, $exprt, $query)>>
+
+
+  <<// 2) Does Not Exist>>
+  <<If:UserRelationship ($items..@length > 0)>>
+    <<$intersectionId = $items..(1)..Intersection..@Id>>
+      <<// JT Xenos: 6/16/2017, 4:19:18 PM - Remove the ~~User~~ relationship if $intersectionId == 0>>
+      <<If:NoIntersectingUser ($intersectionId == 0)>>
+        <<do $enterpriseObject..@RemoveProperty("User", $items..(1)..object)>>
+      <</If:NoIntersectingUser>>
+    <</If:UserRelationship>>
+
+  <<If:NoValidUsers (($items..@Length == 0) || ($intersectionId == 0))>>
+    <<//  A) @LinkItem On Users Cloud, (Save Intersection)>>
+    <<$enterpriseObject..@UseCloud($Name = "Users", $Cloud = $UsersCloud)>>
+    <<$usersCloud..@LinkItem($LinkObject = $user, $NewIntersection = $userIntersection )>>
+
+    <<//  B) enterprise@SetProperty ("Users", ID of Object, ID of Intersection)  ****BE VERY CAREFUL!!!!>>
+    <<//    This will add a ~~User~~ relation to the enterise>>
+
+    <<//    ****Ensure both of these exist "ID of Object, ID of Intersection"; Old bug would whipe all info if not supplied>>
+    <<If:CloudandInterSectionExist ($userIntersection..@Id <> 0)>>
+      <<$enterpriseObject..@SetProperty("User", $user..Id, $userIntersection..Id)>>
+    <</If:CloudandInterSectionExist>>
+
+  <<Else:NoValidUsers>>
+      <<$userIntersection = $items..(1)..Intersection>>
+  <</If:NoValidUsers>>
+
+  <<// 3) ON User Intersection do @SetProperty("System", SysID)>>
+  <<// (do later) Also Check Entity>>
+  <<If:systemParamExists (($system..Id <> 0) && ($userIntersection..@Id <> 0))>>
+
+    <<// JT Xenos: 6/19/2017, 2:10:09 PM - if system is already set don't reset>>
+
+    <<do $userIntersection..@RemoveProperty("System")>>
+    <<do $userIntersection..@SetProperty("System", $system..@Id, 0)>>
+
+    <<// JT Xenos: 6/12/2017, 12:18:35 PM - Also create account>>
+    <<$enterpriseObject..@UseCloud($Name="Accou nts", $Cloud=$accountsCloud)>>
+
+    <<If:useremail ($user.."Email Address" <> "")>>
+      <<$user.."Email Address"..@Text_Split("@", $userId)>>
+      <<$accountName="SSO-" + $enterpriseObject.."Formatted Name" + "." + $userId..(1)>>
+      <<If:NoAccountExists (@LoginCheck($accountName) == 0)>>
+        <<//$accountsCloud..@CreateAccount($Id = $accountName, $Password = "" , $UserEntity=$userIntersection, $Account = $account)>>
+        <<$accountsCloud..@CreateAccount($Id = $accountName, $Password = "" , $UserEntity=$user, $Account = $account)>>
+      <<Else:NoAccountExists>>
+        <<// JT Xenos: 6/19/2017, 12:24:51 PM - If account exists makes sure it has the appropriate ~~User Account~~ relationship>>
+      <</If:NoAccountExists>>
+
+    <</If:useremail>>
+
+    <</If:systemParamExists>>
+
+<</For:users>>
