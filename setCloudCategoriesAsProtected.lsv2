@@ -1,0 +1,38 @@
+<<New Object $cloudCats>>
+<<New Object $items>>
+<<New Text $export>>
+<<New Text $query>>
+
+<<// cloud categories object 862518838>>
+<<$cloudCats..@Is(862518838)>>
+
+<<$query = "'
+Get
+Object.."Formatted Name"
+where Link == "Item"
+"'>>
+
+<<$cloudCats..@Get($items,$export,$query)>>
+
+<<$items..@Length>></br>
+
+<<New Number $i>>
+
+<<For:clouds Var=$i Start=1 End=$items.@Length>>
+<<$items..($i).."Formatted Name">></br>
+<<//$items..($i)..@SetProperty("Protected", "Y")>>
+<</For:clouds>>
+
+
+
+<</*
+<<New Text $fetchedCats>>
+<<$fetchedCats = $cloudCats..@Execute("GetItemCategories.do")>>
+<<$fetchedCats>>
+
+<<New Number $itemCount>>
+<<//$cloudCats..@GetItems($Items=$items)>>
+<<$cloudCats..@GetItems($TotalItems=$itemCount)>></br>
+<<$itemCount>>
+
+ */>>

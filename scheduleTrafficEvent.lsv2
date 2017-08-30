@@ -1,5 +1,5 @@
 <<New Object $obj>>
-<<$obj..@Is(951078725)>>
+<<$obj..@Is(951131527)>>
 <<$obj..id>>
 <<New Text $error>>
 <<New Number $event>>
@@ -16,7 +16,7 @@
   $Timeout = 600,
   $Reschedule = "N",
   $Description = "test traffic event",
-  $URLParams = "",
+  $URLParams = "count=1",
   $Error = $error,
   $Event = $event,
   $Priority = 9999

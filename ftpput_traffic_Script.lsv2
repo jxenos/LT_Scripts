@@ -45,7 +45,7 @@
 <<If:noPdf (@AsText($directMailFiles..Success) <> "true")>>
   <<do $Job..@SetField($Field = "Status", $Value = "Failed")>>
   <<$ErrorMessage="PDF Failed to Generate">>
-  <<@ExitAction(123, $ErrorMessage)>>
+  <<@ExitAction(123, $ErrorMessage)>>ffj
 <</If:noPdf>>
 
 <<//FTPPUT>>
