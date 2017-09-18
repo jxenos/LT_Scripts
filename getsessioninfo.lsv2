@@ -1,0 +1,3 @@
+<<New Object $obj>>
+<<$obj..@Is(878320503)>>
+<<$obj..@Execute("GetSessionInfo.json")>>
