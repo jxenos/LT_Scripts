@@ -1,0 +1,38 @@
+<</*
+script domain
+http://liveplatform.com/Kasasa/ConnectedContent/MPMforGerman-AmericanStateBank_FJ2AVA/AvailableRecipientLists/
+*/>>
+
+<<New Object $prospectsList>>
+<<New Object $results>>
+<<New Object $availableRecipientListsForGermanAmerican>>
+<<New Object $plp1>>
+<<New Object $plp2>>
+<<New Number $i>>
+<<$prospectsList..@Is(923938199)>>
+<<$availableRecipientListsForGermanAmerican..@Is(944406231)>>
+
+<<$prospectsList..@GetItems($Items=$results,$ResultCount=3000)>>
+<<// total 2177>>
+
+<<//$results..@Length()>>
+
+<<$availableRecipientListsForGermanAmerican..@UseCloud($Name="Prospects List Part 1", $Cloud=$plp1)>>
+<<$availableRecipientListsForGermanAmerican..@UseCloud($Name="Prospects List Part 2", $Cloud=$plp2)>>
+<textarea>
+<<$plp1..@Id>>
+</textarea>
+<<//$plp1..@LinkItem($LinkItem = $results..(1)..Object)>>
+
+<</*
+<<// part1>>
+<<For:resultsfirstk Var=$i Start=1 End=1000>>
+	<<$plp1..@LinkItem($LinkItem = $results..($i)..Object)>>
+<</For:resultsfirstk>>
+
+
+<<// part2>>
+<<For:resultslast Var=$i Start=1001 End=$results..@Length>>
+	<<$plp2..@LinkItem($LinkItem = $results..($i)..Object)>>
+ <</For:resultslast>>
+ */>>
