@@ -1,0 +1,7 @@
+<<New Object $code>>
+<<$code..@Is(931877472)>>
+
+<<$code..@SetProperty("Access", "Public")>>
+<<$code..Access>>
+
+<<@RefreshAction($code..@id)>>

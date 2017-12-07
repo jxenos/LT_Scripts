@@ -1,0 +1,4 @@
+<<$Cloud..@Find($results, "[{"Field Name":"Brand Type","Comparison":"Equal To","Value":"Commerical"}]", "[{"Field Name":"Name","Order":"Descending"}]", "Tactic||Mailing List")>>
+
+
+<<@Find($Cloud, $results, "[{"Field Name":"Brand Type","Comparison":"Equal To","Value":"Commerical"}]", "[{"Field Name":"Name","Order":"Descending"}]", "Tactic||Mailing List")>>
