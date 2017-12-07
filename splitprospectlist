@@ -1,0 +1,14 @@
+<<New Object $prospectsList>>
+<<New Object $results>>
+<<New Object $availableRecipientListsForGermanAmerican>>
+<<New Object $plp1>>
+<<New Object $plp2>>
+
+<<$prospectsList..@Is(923938199)>>
+<<$availableRecipientListsForGermanAmerican..@Is(944406231)>>
+
+<<$prospectsList..@GetItems($Items=$results,$ResultCount=3000)>>
+<<// total 2177>>
+<<$results..@Length()>>
+<<$availableRecipientListsForGermanAmerican..@UseCloud($Name="Prospects List Part 1", $Cloud=$plp1)>>
+<<$availableRecipientListsForGermanAmerican..@UseCloud($Name="Prospects List Part 2", $Cloud=$plp2)>>
