@@ -1,0 +1,21 @@
+<</*
+
+<<New Object $obj>>
+<<New Number $i>>
+<<New Object $dri>>
+<<$obj..@Is(906390755)>>
+<<$obj..@DRI>></br>
+<<$obj..@DRI..@Text_Split("/", $dri)>>
+<<For:dri Var=$i Start=1 End=$dri..@Length>>
+
+<</For:dri>><<$i>>:<<$dri..($dri..@Length)>></br>
+*/>>
+
+<<New Text $url>>
+<<$url=@URL_Domain>>
+<<$url>></br>
+<<@Text_Replace_IgnoreCase($url,"newc21","c21tools")>>
+<<$url>>
+
+<<$url = "dev.livestuff.com">>
+<<$url = "dev.livetechnology.com">>

@@ -97,7 +97,7 @@ Export as JSON
     <<do $userIntersection..@SetProperty("System", $system..@Id, 0)>>
 
     <<// JT Xenos: 6/12/2017, 12:18:35 PM - Also create account>>
-    <<$enterpriseObject..@UseCloud($Name="Accou nts", $Cloud=$accountsCloud)>>
+    <<$enterpriseObject..@UseCloud($Name="Accounts", $Cloud=$accountsCloud)>>
 
     <<If:useremail ($user.."Email Address" <> "")>>
       <<$user.."Email Address"..@Text_Split("@", $userId)>>

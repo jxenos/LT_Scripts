@@ -1,0 +1,22 @@
+<<New Object $liveConnection>>
+<<New Object $cloud>>
+<<New Object $fetchedFile>>
+
+<<// jdsports liveconnection upload>>
+<<$liveConnection..@Is(959496903)>>
+
+<<// jdsports dynamic assets>>
+<<$cloud..@Is(938468623)>>
+
+<<$liveConnection..@Execute("upload.do")(
+	$Name= "hsJMRqkwk_xzsGuoMVrpbjlCbg5KF1t6TH--5wToS7E.jpg",
+	$Cloud= $cloud,
+	$Path="lt-liveplatform/jdsports/ftp/hsJMRqkwk_xzsGuoMVrpbjlCbg5KF1t6TH--5wToS7E.jpg"
+)>>
+
+<</*
+<<$fetchedFile..@CreateTempFile("hsJMRqkwk_xzsGuoMVrpbjlCbg5KF1t6TH--5wToS7E","jpg")>>
+
+<<$fetchedFile..@AmazonS3GetFile("lt-liveplatform/jdsports/ftp/hsJMRqkwk_xzsGuoMVrpbjlCbg5KF1t6TH--5wToS7E.jpg", "hsJMRqkwk_xzsGuoMVrpbjlCbg5KF1t6TH--5wToS7E.jpg")>>
+<<$fetchedFile..file..extension>>
+*/>>

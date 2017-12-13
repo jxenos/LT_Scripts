@@ -1,0 +1,18 @@
+<<New Text $asdf="ftp.liveplatform.com/part2/[partr3]/asdf//a">>
+<<New Text $path>>
+<<New Number $i>>
+<<New Object $split>>
+<<@Text_Split($asdf, "/", $split)>>
+<<//$split..@Length()>>
+<<New Text $url>>
+<<$url = $split..(1)>>
+<<For:split Var=$i Start=2 End=$split..@Length>>
+<<$path = $path + "/" + $split..($i)>>
+
+<</For:split>>
+<<$url>></br>
+<<$path>>
+
+<<If:invalidPath ($path..@Contains("//"))>>
+bad path
+<</If:invalidPath>>

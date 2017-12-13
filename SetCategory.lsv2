@@ -1,0 +1,23 @@
+<<New Object $target>>
+<<New Text $targetCategory>>
+
+
+<<New Object $currentCategory>>
+<<New Object $transmogCategory>>
+
+<<$target..@Is()>>
+<<$targetCategory = "">>
+
+<<$target..@GetCategory($Category = $currentCategory)>>
+<<$target..@FindCategoryByName($Category= $targetCategory, $FoundCategory = $transmogCategory)>>
+
+
+<<If:LiveStuffItem ($target..@OT_Code == 725417996)>>
+	<<If:category ($currentCategory..@Id <> $transmogCategory..@Id)>>
+		<<do $target..@SetProperty("Item Of", $liveActionCategory, 0)>>
+	<</If:category>>
+<<Else:LiveStuffItem>>
+	<<If:category ($currentCategory..@Id <> $transmogCategory..@Id)>>
+		<<do $target..@SetProperty("Category", $transmogCategory, 0)>>
+	<</If:category>>
+<</If:LiveStuffItem>>

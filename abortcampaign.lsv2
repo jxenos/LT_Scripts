@@ -1,0 +1,11 @@
+<<// call this on the DRI of the campaign in the script url>>
+
+
+<<New Text $success>>
+<<New Text $action>>
+
+
+<<$action = "abort">>
+
+<<$This..@UpdateStatus($Action=$action, $Success=$success)>>
+<<$success>>

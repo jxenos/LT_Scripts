@@ -1,0 +1,12 @@
+<<New Object $obj>>
+<<New Object $items>>
+<<New Object $res>>
+<<New Number $i>>
+
+<<$obj..@Is(952720188)>>
+
+<<$obj.."Item Of"..Object..@Get($items,$res,"'Get Object.."Formatted Name" Where Link == "Field" And Tag == "Entity""')>>
+
+<<For:Items Var=$i Start=1 End=$items..@length>>
+  <<$Items..($i)..Object..@Id>>
+<</For:Items>>

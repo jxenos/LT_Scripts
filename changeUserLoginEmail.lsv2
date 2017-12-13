@@ -1,0 +1,96 @@
+<</*
+	call this on the system the account is for in the URL script
+	NOTE:  This process will destroy the current password, be sure to call with a new temp password
+	NOTE:  This affects all modes, not just the mode it is called in
+*/>>
+
+<<New Text $currentEmail>>
+<<New Text $password="">>
+<<New Text $targetEmail>>
+<<New Text $query>>
+<<New Text $success>>
+<<New Text $err>>
+
+<<New Object $accounts>>
+<<New Object $junk>>
+<<New Object $user>>
+
+<<New Number $setData>>
+
+<<$currentEmail = "Michael.Weatherston@jdplc.com">>
+<<$targetEmail = "MichaelWeatherston@jdsportsfashion.com.au">>
+<<$password= "jdsports">>
+
+<</*
+<<$currentEmail = "Meseeks2@Livetechnology.com">>
+<<$targetEmail = "Meseeks@Livetechnology.com">>
+*/>>
+
+
+<<$user..@Is(@LoginCheck($currentEmail))>>
+
+<<If:userAccountFound ($user..@Id)>>
+
+	<<$query = "'
+		GET
+		Object.."Formatted Name"
+		Where Link == "~~User Account~~""'
+	>>
+
+	<<$user..@Get($accounts, $junk, $query)>>
+
+	<<If:accountFound (@Length($accounts))>>
+		<<$setData = $accounts..(1)..Object..@SetProperty(
+		  "UserId",
+		  @LoginCheck($currentEmail),
+		  $targetEmail,
+		  $password,
+		  ""
+		)>>
+
+
+		<<If:setSuceeded ($setData == 0)>>
+			<<$success="true">>
+			<<If:multipleAccountsFound (@Length($accounts) > 1)>>
+				<<$err="WARNING: multiple accounts found: " + @Length($accounts) >>
+			<<Else:multipleAccountsFound>>
+				<<$err="">>
+			<</If:multipleAccountsFound>>
+		<<Else:setSuceeded>>
+			<<$success="false">>
+			<<$err="setData failed">>
+		<</If:setSuceeded>>
+
+	<<Else:accountFound>>
+		<<$success="false">>
+		<<$err="account not found">>
+	<</If:accountFound>>
+
+<<Else:userAccountFound>>
+	<<$success="false">>
+	<<$err="user not found">>
+<</If:userAccountFound>>
+
+
+Success:<<$success>></br>
+ErrorMsg: <<$err>></br>
+</br>
+</br>
+
+<textarea>
+<<$targetEmail>>
+</textarea>
+
+  <</*
+  <<$user..@Is(972251530)>>
+
+<<$setData = $user..@SetProperty(
+  "UserId",
+  @LoginCheck("Meseeks@Livetechnology.com"),
+  "meseeks2@Livetechnology.com",
+  "test",
+  ""
+)>>
+<br>
+<<$setData>>
+*/>>

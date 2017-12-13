@@ -1,0 +1,12 @@
+<<New Object $obj>>
+<<$obj..@Is(949460992)>>
+<<New Text $lockedby>>
+<<New Text $locked>>
+<<New Text $lockeddate>>
+<<New Text $result>>
+<<$This..@LockIt(
+  $lockedby = "825099042",
+  $result = $result
+)>>
+
+<<$result>>

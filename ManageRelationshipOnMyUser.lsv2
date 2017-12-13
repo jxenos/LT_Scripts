@@ -1,0 +1,23 @@
+<<New Object $jt>>
+<<$jt..@Is(825099042)>>
+
+<<New Text $query>>
+<<New Text $junk>>
+<<New Object $items>>
+<<New Object $itemObject>>
+
+<<$query = "'
+GET
+Object.."Formatted Name"
+
+Where Link == "~~Manages~~"
+"'>>
+<<// "'>>
+
+<<$jt..@Get($items, $junk, $query)>>
+
+<<New Number $i>>
+<<For:asdf  Var=$i Start=1 End=$items..@Length>>
+  <<$itemObject = $items..($i)..Object>>
+  <<$itemObject..@Id>>
+<</For:asdf>>
