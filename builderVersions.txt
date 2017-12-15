@@ -1,0 +1,16 @@
+Where to check the bulder versions
+
+
+LiveBuilder:
+
+Dev:  	http://10.120.161.52:1050/LiveBuilder/LiveBuilder.dll
+Staging: 	http://10.120.161.102:1050/LiveBuilder/LiveBuilder.dll
+Live: 	http://10.120.161.159:1050/LiveBuilder/LiveBuilder.dll/~~system~~?format=html
+		http://10.120.161.160:1050/LiveBuilder/LiveBuilder.dll/~~system~~?format=html
+
+LivePlatformBuilder (LSV2):
+
+Dev:			http://10.120.171.52:1070/LivePlatformBuilder/LivePlatformBuilder.dll
+QA:			http://10.120.171.102:1070/LivePlatformBuilder/LivePlatformBuilder.dll
+Prerelease: 	http://10.120.171:142:1070/LivePlatformBuilder/LivePlatformBuilder.dll
+Live:			http://10.120.171.152:1070/LivePlatformBuilder/LivePlatformBuilder.dll
