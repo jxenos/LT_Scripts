@@ -1,0 +1,99 @@
+<<// Job Intersection>>
+<<New Object $int>>
+
+<<// mailing list>>
+<<New Object $list>>
+<<New Object $tactic>>
+<<New Object $seqCloud>>
+<<New Object $sequences>>
+<<New Object $items>>
+<<New Number $i>>
+<<New Number $c>>
+<<New Number $page = 1>>
+<<New Number $results = 1000>>
+<<New Number $totalItems>>
+
+<<New Number $updated>>
+<<// Elga>>
+<<// $int..@Is(941958994)>>
+
+<<// Uni>>
+<<// $int..@Is(944272524)>>
+
+<<// Pioneer>>
+<<// $int..@Is(952551175)>>
+
+<<// Frankenmuth>>
+<<// $int..@Is(941506240)>>
+
+<<// Security State Bank>>
+<<// $int..@Is(945164796)>>
+
+<<// Lee>>
+<<// $int..@Is(952730491)>>
+
+<<// Newton>>
+<<// $int..@Is(956994346)>>
+
+<<// Jeanerette>>
+<<// $int..@Is(952551122)>>
+
+<<// Badass>>
+<<// $int..@Is(961031404)>>
+
+<<// German Email>>
+<<//$int..@Is(965473419)>>
+
+<<// German DM>>
+<<$int..@Is(968246108)>>
+
+<<$int..@GetFieldValue($Name = "Mailing List", $LinkedObject = $list)>>
+<<$int..@GetFieldValue($Name = "Tactic", $LinkedIntersection = $tactic)>>
+<<$tactic..@UseCloud($Name = "Sequences", $Cloud = $seqCloud)>>
+
+<<$seqCloud..@GetItems($Items = $sequences)>>
+Int: <<$int..@DRI>><br>
+ML: <<$list..@ID>> - <<$list..@DRI>><br>
+Seq: <<$sequences..@Length>><br>
+Page: <<$page>>
+<br>
+<<$list..@GetItems($Items = $items, $ResultCount = $results, $PageNumber = $page, $TotalItems = $totalItems)>>
+
+TotalItems: <<$totalItems>><br><br>
+
+<<New Object $pl>>
+<<// $pl..@Is(962542563)>>
+
+<<For:items Var=$i Start=1 End=$items..@Length>>
+<<// For:items Var=$i Start=772 End=$items..@Length>>
+  <<New Object $srcObj>>
+  <<New Text $email>>
+  <<$srcObj = $items..($i)..Object>>
+
+  <<$srcObj..@SetProperty("Data - Number__" + $int..@Id + "__Drip Offset", 30)>>
+  <<$items..($i)..Intersection..@GetFieldValue($Name = "Email Address", $Value = $email)>>
+  <<$i>> - <<$srcObj..@Id>> - <<$items..($i)..Intersection..@Id>> - <<$srcObj..("Data - Number__" + $int..@Id + "__Drip Offset")>> - <<$email>><br>
+
+  <</*
+  <<If:NeedsUpdate ($srcObj..("Data - Number__" + $int..@Id + "__Drip Offset") <> 20)>>
+    <br>
+    <<$srcObj..@Id>> Updated
+  <br>
+    <<@Increment($updated)>>
+  <</If:NeedsUpdate>>
+  */>>
+  <<// $pl..@LinkItem($LinkObject = $srcObj)>>
+  <<For:Sequences Var=$c Start=1 End=$sequences..@Length>>
+    <<New Text $alt>>
+    <<$sequences..($c)..Intersection..@GetFieldValue($Name = "After Last Touch", $Value = $alt)>>
+    <<$sequences..($c)..Object.."Formatted Name">> : <<$srcObj..("Data - Text__" + $int..@Id + "__Sequence__" + $sequences..($c)..Intersection..@Id)>> - <<$alt>><br>
+  <</For:Sequences>>
+
+
+
+<</For:items>>
+<</*
+<br>
+<<$updated>> records updated.
+<br>
+*/>>
