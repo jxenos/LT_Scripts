@@ -1,0 +1,49 @@
+<<New Object $prospectsList>>
+<<New Object $results>>
+<<New Object $job>>
+<<New Object $partialListPiece>>
+<<New Number $i>>
+<<New Object $newInt>>
+<<New Number $page = 1
+>>
+<<New Number $count = 2500>>
+<<New Number $receipientsAdded>>
+<<New Text $cloudCategory = "Partial List">>
+<<$prospectsList..@Is(974072520)>>
+<<$job..@Is(974072509)>>
+
+<<$prospectsList..@GetItems($Items=$results,$ResultCount=$count, $PageNumber = $page)>>
+
+<<//$results..@Length()>>
+<<$job..@UseCloud($Name=$cloudCategory + " " + $page, $Cloud=$partialListPiece, $CloudCategory = $cloudCategory)>>
+
+<<// Results>>
+<<$cloudCategory>>  <<$page>>:
+<textarea>
+<<$partialListPiece..@Id>>
+</textarea>
+
+
+
+<<//@ExitAction(200, "")>>
+<<For:addReceipients Var=$i Start=1 End=$results..@Length>>
+  <<$partialListPiece..@LinkItem($LinkObject = $results..($i)..Object, $NewIntersection = $newInt)>>
+  <<If:userMade ($newInt..@Id)>>
+	<<@Inc($receipientsAdded)>>
+  <</If:userMade>>
+  <<//$newInt..@Id>> <<// Created<br> >>
+<</For:addReceipients>>
+
+Receipients Added: <<$receipientsAdded>>
+
+
+<<New Text $debug>>
+<<$debug = "<pre>" + $cloudCategory + " " + $page + ": " + $partialListPiece..@Id
++ "<br>Receipients Added: " + $receipientsAdded + " of " + $results..@Length()
++ "</pre>">>
+<<$This..@SendEmail(
+  $To = "jxenos@livetechnology.com",
+  $Subject = "Campaign Batch Partial List",
+  $From = "support@livetechnology.com",
+  $HTML = $debug
+)>>
