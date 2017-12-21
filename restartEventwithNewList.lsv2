@@ -1,0 +1,100 @@
+<<New Text $debug>>
+<<New Text $subject>>
+<<New Text $success>>
+<<New Number $monitorEventId>>
+<<New Number $currentList>>
+
+<<New Object $partialList1>>
+<<New Object $partialList2>>
+<<New Object $partialList3>>
+<<New Object $partialList4>>
+
+<<$partialList1..@Is(974092185)>>
+<<$partialList2..@Is(974108759)>>
+<<$partialList3..@Is(974101422)>>
+<<$partialList4..@Is(974105082)>>
+
+<<$monitorEventId = $SYS..EventId>>
+
+<<New Number $jobEventId>>
+<<$jobEventId = 5962035>>
+
+<<New Object $job>>
+<<$job..@Is(974072509)>>
+
+<<New Number $notificationTimer>>
+<<$notificationTimer = $job.."Data - Number__NotificationTimer">>
+<<@Inc($notificationTimer)>>
+<<do $job..@SetProperty("Data - Number__NotificationTimer", $notificationTimer, 0)>>
+
+<<New Text $status>>
+<<$status = @GetEventElement($jobEventId, "Status")>>
+
+<<New Text $timeTaken>>
+<<$timeTaken = @GetEventElement($jobEventId, "TimeTaken")>>
+
+
+<<New Text $progress>>
+<<$job..@GetFieldValue($Name = "Progress", $Value = $progress)>>
+<<New Object $parts>>
+<<@Text_Split($progress, "||", $parts)>>
+
+<<If:status (($status == "2") && ($parts..(1) == $parts..(2)))>>
+	<<New Object $mailingList>>
+	<<$job..@GetFieldValue($Name = "Source Item", $LinkedObject = $mailingList)>>
+
+	<<If:updateMailingList ($mailingList..@Id == $partialList4..@Id)>>
+		<<$debug = "<pre>Elga Traffic to quad, complete</pre>">>
+		<<$subject = "Direct Mail finished!!!">>
+		<<$success="true">>
+	<</If:updateMailingList>>
+
+
+	<<If:updateMailingList ($mailingList..@Id == $partialList3..@Id)>>
+		<<$job..@SetField($Field = "Source Item", $Destination = $partialList4)>>
+		<<do $job..@SetProperty("Data - Number__Current List", 4, 0)>>
+	<</If:updateMailingList>>
+
+
+	<<If:updateMailingList ($mailingList..@Id == $partialList2..@Id)>>
+		<<$job..@SetField($Field = "Source Item", $Destination = $partialList3)>>
+		<<do $job..@SetProperty("Data - Number__Current List", 3, 0)>>
+	<</If:updateMailingList>>
+
+
+	<<If:updateMailingList ($mailingList..@Id == $partialList1..@Id)>>
+		<<$job..@SetField($Field = "Source Item", $Destination = $partialList2)>>
+		<<do $job..@SetProperty("Data - Number__Current List", 2, 0)>>
+	<</If:updateMailingList>>
+
+
+	<<@SetEventElement($jobEventId,"Scheduled",@Now + (1/24/12))>>
+	<<@ResetEvent($jobEventId)>>
+
+<<Else:status>>
+	<<$debug = "<pre>Mailing List: " + $job.."Data - Number__Current List" +
+		"<br>Progress: " + $progress +
+		"<br>status: " + $status +
+		"<br>timeTaken: " + @AsNumber($timeTaken)/1000/60/60 +
+		"<br>currentRate: " + $parts..(1)/@AsNumber($timeTaken)/1000/60/60 +
+		"</pre>">>
+	<<$subject = "Direct Mail Status">>
+
+<</If:status>>
+
+<<If:count (($notificationTimer == 15) || ($parts..(1) == $parts..(2))>>
+	<<$This..@SendEmail(
+	  $To = "jxenos@livetechnology.com,jeiser@livetechnology.com",
+	  $Subject = $subject,
+	  $From = "support@livetechnology.com",
+	  $HTML = $debug
+	)>>
+
+	<<do $job..@SetProperty("Data - Number__NotificationTimer", 0, 0)>>
+<</If:count>>
+
+<<If:notFinished ($success <> "true")>>
+	<<// reschedule self>>
+	<<@SetEventElement($monitorEventId,"Scheduled",@Now + (1/24/60))>>
+	<<@ResetEvent($monitorEventId)>>
+<</If:notFinished>>
