@@ -1,5 +1,24 @@
 <<New Number $eventId>>
-<<$eventId = 2698521>>
+<<New Text $url>>
 
+<<// 12/20>>
+<<//$eventId = 5859427>>
+
+<<// 12/21>>
+<<//$eventId = 5949594>>
+
+<<// 12/28>>
+<<$eventId = 5949042>>
+<</*
+<<$url="http://kasasa.liveplatform.com/ConnectedContent/UniversityCreditUnion/ConnectedContent/NewCampaign_G3T7RQ/DailyJobs/2017-12-28-TestDailyJobs-1550UCUDirectMailCwSProspecting172012-6828E291141A93FF/2017-12-28-1-DirectMailTouch1/traffic.do">>
+<<@SetEventElement($eventId,"URL", $url)>>
+<<@SetEventElement($eventId,"Timeout", 9999999)>>
+<<@SetEventElement($eventId,"Priority", 999999)>>
+*/>>
+
+
+<</*
 <<@SetEventElement($eventId,"Scheduled",@Now)>>
 <<@ResetEvent($eventId)>>
+<<//@DisableEvent($eventId)>>
+*/>>

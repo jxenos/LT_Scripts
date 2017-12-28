@@ -1,0 +1,65 @@
+<<New Object $job>>
+<<New Object $mailingList>>
+<<New Object $results>>
+
+
+<<$mailingList..@Is(974719707)>>
+
+<</*
+<<New Object $campaign>>
+<<New Object $tactic>>
+<<New Object $jobs>>
+
+<<$campaign..@Is(973860760)>>
+
+<<$campaign..@GetFieldValue($Name = "Tactic", $LinkedIntersection = $tactic)>>
+
+<<$campaign..@SetupDailyJobs($DailyJobs = $jobs, $Tactic = $tactic, $CampaignTest = "Y")>>
+
+<<New Object $children>>
+<<$jobs..@GetItems($Items=$children, $LinkFrom="Data - Linked Object", $Tag="Parent")>>
+<<If:child ($children..@Length>0)>>
+<<$job = $children..(1)..Object>>
+<</If:child>>*/>>
+
+
+<<// job 1 - 12/20>>
+<<//$job..@Is(973860877)>>
+
+<<// job 2 - 12/21>>
+<<//$job..@Is(974004432)>>
+
+<<// job 3 - 12/28>>
+<<$job..@Is(974830640)>>
+
+
+<<$job..@SetField($Field = "Source Item", $Destination = $mailingList)>>
+<<$job..@SetField($Field = "Enable Partial List", $Value = "N")>>
+<</*
+*/>>
+
+<<$mailingList..@GetItems($Items=$results,$ResultCount=2500)>>
+<br>
+<br>
+Results: <<$results..@Length()>>
+<br>
+
+<<New Object $sourceItem>>
+<<$job..@GetFieldValue($Name = "Source Item", $LinkedObject = $sourceItem)>>
+<br>
+sourceItem:<<$sourceItem..@Id>>
+<br>
+<<New Text $pList>>
+<<$job..@GetFieldValue($Name = "Enable Partial List", $Value = $pList)>>
+Plist: <<$pList>>
+
+
+<</*
+call getfieldvalues.json on DRI
+*/>>
+<br>
+<br>
+jobDRI:
+<textarea>
+<<$job..@DRI>>
+</textarea>

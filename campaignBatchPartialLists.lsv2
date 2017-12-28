@@ -4,13 +4,20 @@
 <<New Object $partialListPiece>>
 <<New Number $i>>
 <<New Object $newInt>>
-<<New Number $page = 1
->>
+<<New Number $page = 10>>
+<<New Number $batches = 10>>
 <<New Number $count = 2500>>
+
 <<New Number $receipientsAdded>>
 <<New Text $cloudCategory = "Partial List">>
-<<$prospectsList..@Is(974072520)>>
-<<$job..@Is(974072509)>>
+
+<<$prospectsList..@Is(973860878)>>
+<<$job..@Is(973860877)>>
+
+<<For:totalPages Var=$page Start=$page End=$batches>>
+
+<<$receipientsAdded=0>>
+
 
 <<$prospectsList..@GetItems($Items=$results,$ResultCount=$count, $PageNumber = $page)>>
 
@@ -44,6 +51,8 @@ Receipients Added: <<$receipientsAdded>>
 <<$This..@SendEmail(
   $To = "jxenos@livetechnology.com",
   $Subject = "Campaign Batch Partial List",
-  $From = "support@livetechnology.com",
+  $From = "CampaignBatching@livetechnology.com",
   $HTML = $debug
 )>>
+
+<</For:totalPages>>
