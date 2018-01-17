@@ -1,0 +1,118 @@
+<<new text $t>>
+<<New object $items>>
+<<New number $k>>
+<<New text $flag>>
+<<New number $ignored>>
+<<New number $totalPages>>
+<<New number $totalItems>>
+<<new text $columns>>
+<<New Number $i>>
+<<New Object $buildItem>>
+<<new text $tag>>
+<<New Object $buildContext>>
+<<$buildContext..@Is(939152403)>>
+<<New Number $width>>
+<<New Number $height>>
+<<new text $units>>
+<<new text $ColorSpace>>
+<<new object $asset_csv>>
+<<New Text $fn>>
+<<New Object $job>>
+
+
+<<New Number $count = 25000>>
+
+<<$job..@Is(973764652)>>
+<<$buildItem..@Is(973764664)>>
+
+
+
+
+
+<<$job..@GetColorSpace($ColorSpace=$ColorSpace)>>
+
+<<$fn=$job..@id..@AsText + "-" + @Format_DateTime(@now, "YYYYMMDDHHNN")>>
+
+<<$buildContext..@GetFieldValue($name="units", $value=$units)>>
+<<$buildContext..@GetFieldValue($name="width", $value=$t)>>
+<<do @IsNumber($t, $width)>>
+<<$buildContext..@GetFieldValue($name="height", $value=$t)>>
+<<do @IsNumber($t, $height)>>
+
+
+<<$buildItem..@FindItems($items=$items,
+	$filterFieldNames="Do Not Direct Mail",
+	$filterFieldValues="Y",
+	$resultCount=$count,
+	$totalPages=$totalPages,
+	$totalItems=$totalItems)>>
+
+
+<<$items..@Length()>>
+
+<<New text $cdelim>>
+<<$cdelim=@char(9)>>
+
+<<if:c ($columns..@length<=0)>>
+	<<$columns="Sequence_Num||Start_Page||End_Page||Id||Name||Address Line 1||City||State||ZIP Code">>
+<</if:c>>
+<<New object $headers>>
+<<New text $csv>>
+<<@Text_Split($columns, "||", $headers)>>
+<<$csv="'""' + $headers..(1) + "'""'>>
+<<for:c var=$i start=2 end=$headers..@Length>>
+	<<$csv=$csv + $cdelim + "'""' + $headers..($i) + "'""'>>
+<</for:c>>
+<<$csv=$csv + "
+">>
+
+<<New number $pagesPerItem>>
+<<New number $sp=1>>
+<<New number $ep>>
+<<New number $sn=1>>
+
+
+
+<<$pagesPerItem=2>>
+
+<<$ep=$pagesPerItem>>
+
+
+
+<<for:items var=$k start=1 end=$items..@length>>
+	<<@inc($sn)>>
+
+	<<$csv=$csv + @ToText($sn) + $cdelim + @toText($sp) + $cdelim + @ToText($ep) + $cdelim + @ToText($items..($k)..object..@id)>>
+	<<for:c var=$i start=5 end=$headers..@Length>>
+		<<$items..($k)..object..@GetFieldValue($name=$headers..($i), $value=$t)>>
+		<<$csv=$csv + $cdelim + "'""' + $t + "'""'>>
+		<<$t="">>
+	<</for:c>>
+	<<$csv=$csv + "
+">>
+	<<$sp=$ep+1>>
+	<<$ep=$ep+$pagesPerItem>>
+
+<</for:items>>
+
+<<$tag=$buildContext..@id + ".tsv?" + @Format_Number("0.00##",$width) + "x" + @Format_Number("0.00##",$height) + "!" + $ColorSpace >>
+<</*
+<<$This..@NewBuiltAsset(
+*/>>
+<<$job..@NewBuiltAsset(
+	$context=$buildContext,
+	$extension="tsv",
+	$width=0,
+	$height=0,
+	$colorSpace=$ColorSpace,
+	$result=$asset_csv,
+	$tag=$tag)>>
+
+<<New object $file>>
+<<do $file..@CreateTempFile($fn, "tsv")>>
+<<do $file..@SetFileContent($csv, 1)>>
+<<do $asset_csv..@SetProperty("Asset", $file, 0)>>
+
+<textarea>
+<<$asset_csv..@id>>
+</textarea>
