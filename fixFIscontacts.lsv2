@@ -1,0 +1,29 @@
+<<// http://kasasa.qa.liveplatform.com/FinancialInstitutions/GetItems.json?PageNumber=2&Fields=Name%7C%7CExternal%20Id%7C%7CImage%7C%7CImage%20Preview%7C%7CYoutube%20Id%7C%7CFile&ResultCount=100&expandfields=Y>>
+
+<<// http://kasasa.liveplatform.com/>>
+
+<<New Object $kasasaFIs>>
+<<New Number $x>>
+<<// kasasa financial Institutions>>
+<<$kasasaFIs..@Is(888623573)>>
+<<New Object $FIs>>
+<<$kasasaFIs..@GetItems($Items=$FIs,$ResultCount=9999)>>
+
+<<New Object $contactsCloud>>
+<<New Object $contacts>>
+
+<<For:FIs Var=$x Start=1 End=$FIs..@Length>>
+<<$x>> <<$FIs..($x).."Formatted Name">></br>
+<</*
+	<<$FIs..($x)..Object..@GetCloud($Name="Contacts", $Cloud=$contactsCloud)>>
+
+	<<$contactsCloud..@Id>>
+	<<If:contacts ($contactsCloud..@Id)>>
+		<<$FIs..($x)..Object..@Id>></br>
+		<<$FIs..($x)..Intersection..@Id>></br>
+
+		<<$contactsCloud..@GetItems($Items=$contacts)>>
+		<<$contacts..@Length()>>
+	<</If:contacts>>
+*/>>
+<</For:FIs>>
