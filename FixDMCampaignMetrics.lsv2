@@ -1,0 +1,54 @@
+<<New Object $metric>>
+
+<<New Object $metrics>>
+<<New Text $count>>
+
+<<// German>>
+<<//$count = "2177">>
+<<//$count = "6531">>
+<<// German - campaign>>
+<<//$metric..@Is(968246108)>>
+<<// German - touch1>>
+<<//$metric..@Is(968250790)>>
+<<// German - touch2>>
+<<//$metric..@Is(968250807)>>
+<<// German - touch3>>
+<<//$metric..@Is(968250812)>>
+
+
+<<// Elga>>
+<<//$count = "10001">>
+<<// elga campaign>>
+<<//$metric..@Is(974071733)>>
+<<// Elga touch1>>
+<<//$metric..@Is(974072472)>>
+
+
+<<// security >>
+<<//$count = "1666">>
+
+<<// security campaign>>
+<<//$metric..@Is(973763869)>>
+
+<<//$count = "833">>
+<<// security touch 1>>
+<<//$metric..@Is(973764534)>>
+
+<<// UniversityCreditUnion>>
+<<$count = "23419">>
+<<// UniversityCreditUnion campaign>>
+<<$metric..@Is(973860760)>>
+
+<<// UniversityCreditUnion touch1>>
+<<//$metric..@Is(973860864)>>
+
+
+
+<<$metric..Data__SparkPostMetrics>>
+<<$metrics..@JSON_ToObject($metric..Data__SparkPostMetrics)>>
+<<$metrics..count_sent = $count>>
+<<//$metrics..count_delivered = 0>>
+<textarea>
+<<$metric.."Data__SparkPostMetrics">>
+</textarea>
+<<//$metric..@SetProperty("Data__SparkPostMetrics", $metrics..@ToJSON())>>
