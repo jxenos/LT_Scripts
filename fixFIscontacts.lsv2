@@ -1,9 +1,7 @@
-<<// http://kasasa.qa.liveplatform.com/FinancialInstitutions/GetItems.json?PageNumber=2&Fields=Name%7C%7CExternal%20Id%7C%7CImage%7C%7CImage%20Preview%7C%7CYoutube%20Id%7C%7CFile&ResultCount=100&expandfields=Y>>
-
-<<// http://kasasa.liveplatform.com/>>
-
+<<//run on http://kasasa.liveplatform.com/>>
 <<New Object $kasasaFIs>>
 <<New Number $x>>
+<<New Number $i>>
 <<// kasasa financial Institutions>>
 <<$kasasaFIs..@Is(888623573)>>
 <<New Object $FIs>>
@@ -11,10 +9,13 @@
 
 <<New Object $contactsCloud>>
 <<New Object $contacts>>
-
-<<For:FIs Var=$x Start=1 End=$FIs..@Length>>
+<<New Number $t>>
+<<New Number $z>>
+<<// $FIs..@Length>>
+<<For:FIs Var=$x Start=216 End=216 >>
 <<$x>> <<$FIs..($x).."Formatted Name">></br>
-<</*
+	<<$t=0>>
+	<<$z=0>>
 	<<$FIs..($x)..Object..@GetCloud($Name="Contacts", $Cloud=$contactsCloud)>>
 
 	<<$contactsCloud..@Id>>
@@ -22,8 +23,24 @@
 		<<$FIs..($x)..Object..@Id>></br>
 		<<$FIs..($x)..Intersection..@Id>></br>
 
-		<<$contactsCloud..@GetItems($Items=$contacts)>>
-		<<$contacts..@Length()>>
+		<<$contactsCloud..@GetItems($Items=$contacts, $ResultCount=999999)>>
+		<<$contacts..@Length()>><br>
+
+		<<For:contacts Var=$i Start=1 End=$contacts..@Length>>
+			<<If:emailinname (($contacts..($i)..Object.."Formatted Name"..@Contains("@")) || ($contacts..($i)..Intersection.."Formatted Name"..@Contains("@")))>>
+					<<@Inc($t)>>
+				<<If:both (($contacts..($i)..Object.."Formatted Name"..@Contains("@") > 0) && ($contacts..($i)..Intersection.."Formatted Name"..@Contains("@") > 0))>>
+					<<@Inc($z)>>
+				<<Else:both>>
+					Object:			 <<$contacts..($i)..Object.."Formatted Name">><br>
+					Intersection:	 <<$contacts..($i)..Intersection.."Formatted Name">><br>
+				<</If:both>>
+			<</If:emailinname>>
+
+			<</For:contacts>>
+		Total that contain at sign <<$t>><br>
+		Both <<$z>><br>
 	<</If:contacts>>
-*/>>
+
+
 <</For:FIs>>
