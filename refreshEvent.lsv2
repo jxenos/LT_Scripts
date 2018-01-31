@@ -12,17 +12,17 @@
 
 <<// 12/29>>
 <<$eventId = 5949040>>
+<</*
 
 
 <<$url="http://http://kasasa.liveplatform.com/ConnectedContent/UniversityCreditUnion/ConnectedContent/NewCampaign_G3T7RQ/DailyJobs/2017-12-29-TestDailyJobs-1550UCUDirectMailCwSProspecting172012-9D48542BBDE16E82/2017-12-29-1-DirectMailTouch1/Traffic.do">>
 <<@SetEventElement($eventId,"URL", $url)>>
 <<@SetEventElement($eventId,"Timeout", 9999999)>>
 <<@SetEventElement($eventId,"Priority", 999999)>>
-<</*
 */>>
 
 
-<<@SetEventElement($eventId,"Scheduled",@Now+4.5/24)>>
+<<@SetEventElement($eventId,"Scheduled",@Now)>>
 <<@ResetEvent($eventId)>>
 <</*
 <<//@DisableEvent($eventId)>>
