@@ -30,10 +30,6 @@
 <<do @IsNumber($t, $height)>>
 
 
-<<New Number $count = 25000>>
-
-<<$buildItem..@Is(973860878)>>
-
 <<$buildItem..@FindItems($items=$items,
 	$filterFieldNames="Do Not Direct Mail",
 	$filterFieldValues="Y",
@@ -90,7 +86,10 @@
 <</for:items>>
 
 <<$tag=$buildContext..@id + ".tsv?" + @Format_Number("0.00##",$width) + "x" + @Format_Number("0.00##",$height) + "!" + $ColorSpace >>
-<<$this..@NewBuiltAsset(
+<</*
+<<$This..@NewBuiltAsset(
+*/>>
+<<$job..@NewBuiltAsset(
 	$context=$buildContext,
 	$extension="tsv",
 	$width=0,
