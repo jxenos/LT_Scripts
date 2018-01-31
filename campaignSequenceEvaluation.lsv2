@@ -9,7 +9,7 @@
 <<New Object $items>>
 <<New Number $i>>
 <<New Number $c>>
-<<New Number $page = 1>>
+<<New Number $page = 3>>
 <<New Number $results = 1000>>
 <<New Number $totalItems>>
 
@@ -47,6 +47,9 @@
 <<// German DM>>
 <<$int..@Is(968246108)>>
 
+<<// Security State DM>>
+<<//$int..@Is(973763869)>>
+
 <<$int..@GetFieldValue($Name = "Mailing List", $LinkedObject = $list)>>
 <<$int..@GetFieldValue($Name = "Tactic", $LinkedIntersection = $tactic)>>
 <<$tactic..@UseCloud($Name = "Sequences", $Cloud = $seqCloud)>>
@@ -70,7 +73,7 @@ TotalItems: <<$totalItems>><br><br>
   <<New Text $email>>
   <<$srcObj = $items..($i)..Object>>
 
-  <<$srcObj..@SetProperty("Data - Number__" + $int..@Id + "__Drip Offset", 30)>>
+  <<//$srcObj..@SetProperty("Data - Number__" + $int..@Id + "__Drip Offset", 30)>>
   <<$items..($i)..Intersection..@GetFieldValue($Name = "Email Address", $Value = $email)>>
   <<$i>> - <<$srcObj..@Id>> - <<$items..($i)..Intersection..@Id>> - <<$srcObj..("Data - Number__" + $int..@Id + "__Drip Offset")>> - <<$email>><br>
 
@@ -89,6 +92,8 @@ TotalItems: <<$totalItems>><br><br>
     <<$sequences..($c)..Object.."Formatted Name">> : <<$srcObj..("Data - Text__" + $int..@Id + "__Sequence__" + $sequences..($c)..Intersection..@Id)>> - <<$alt>><br>
   <</For:Sequences>>
 
+
+Clear: << //$srcObj..@SetProperty("Data - Text__" + $int..@Id + "__Sequence__" + $sequences..(3)..Intersection..@Id, "", 0)>><br>
 
 
 <</For:items>>
