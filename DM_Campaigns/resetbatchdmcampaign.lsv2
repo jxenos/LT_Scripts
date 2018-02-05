@@ -1,0 +1,27 @@
+<<New Object $job>>
+<<$job..@Is(979838988)>>
+
+
+<<New Text $formats>>
+<<New Object $format>>
+<<New Object $files>>
+<<New Number $t>>
+<<New Number $f>>
+<<$formats = "pdf||tsv">>
+
+<<New Number $r>>
+<<New Number $i>>
+<<New Object $dataList>>
+<<New Text $fileData>>
+<<New Object $importFileObject>>
+<<New Object $recipient>>
+
+<<// Set Success to Completed>>
+<<For:asdf Var=$i Start=1 End=11>>
+	<<do $Job..@SetProperty("Data - Text__Batch" + $i, "f", 0)>>
+	<<$Job..("Data - Text__Batch" + $i)>>
+<</For:asdf>>
+
+<< $Job..@SetProperty("Data - Text__pdfIds", "")>>
+<< $Job..@SetProperty("Data - Text__tsvIds", "")>>
+<< $Job..@SetProperty("Data - Text__FileNames", "")>>

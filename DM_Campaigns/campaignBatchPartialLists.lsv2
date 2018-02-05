@@ -4,15 +4,15 @@
 <<New Object $partialListPiece>>
 <<New Number $i>>
 <<New Object $newInt>>
-<<New Number $page = 10>>
-<<New Number $batches = 10>>
+<<New Number $page = 3>>
+<<New Number $batches = 5>>
 <<New Number $count = 2500>>
 
 <<New Number $receipientsAdded>>
 <<New Text $cloudCategory = "Partial List">>
 
-<<$prospectsList..@Is(973860878)>>
-<<$job..@Is(973860877)>>
+<<$prospectsList..@Is(980883635)>>
+<<$job..@Is(980883634)>>
 
 <<For:totalPages Var=$page Start=$page End=$batches>>
 

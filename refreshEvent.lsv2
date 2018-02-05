@@ -11,12 +11,12 @@
 <<//$eventId = 5949042>>
 
 <<// 12/29>>
-<<$eventId = 5949040>>
+<<$eventId = 9842159>>
 <</*
+<<$url="http://kasasa.liveplatform.com/ConnectedContent/FrankenmuthCreditUnion/ConnectedContent/NewCampaign_G7ZN6C/DailyJobs/2018-02-05-DailyJob-DirectMailCampaign/2018-02-05-1-DirectMailTouch1/Traffic.do?InHouse=Y">>
 
-
-<<$url="http://http://kasasa.liveplatform.com/ConnectedContent/UniversityCreditUnion/ConnectedContent/NewCampaign_G3T7RQ/DailyJobs/2017-12-29-TestDailyJobs-1550UCUDirectMailCwSProspecting172012-9D48542BBDE16E82/2017-12-29-1-DirectMailTouch1/Traffic.do">>
 <<@SetEventElement($eventId,"URL", $url)>>
+
 <<@SetEventElement($eventId,"Timeout", 9999999)>>
 <<@SetEventElement($eventId,"Priority", 999999)>>
 */>>
@@ -25,5 +25,5 @@
 <<@SetEventElement($eventId,"Scheduled",@Now)>>
 <<@ResetEvent($eventId)>>
 <</*
-<<//@DisableEvent($eventId)>>
+<<@DisableEvent($eventId)>>
 */>>
