@@ -35,14 +35,18 @@
 <<//$metric..@Is(973764534)>>
 
 <<// UniversityCreditUnion>>
-<<$count = "23419">>
+<<//$count = "23419">>
 <<// UniversityCreditUnion campaign>>
-<<$metric..@Is(973860760)>>
+<<//$metric..@Is(973860760)>>
 
 <<// UniversityCreditUnion touch1>>
 <<//$metric..@Is(973860864)>>
 
-
+<< $count = "10002">>
+<<// franken>>
+<<$metric..@Is(980879129)>>
+<<// Franken touch1>>
+<<//$metric..@Is(980883620)>>
 
 <<$metric..Data__SparkPostMetrics>>
 <<$metrics..@JSON_ToObject($metric..Data__SparkPostMetrics)>>
@@ -51,4 +55,6 @@
 <textarea>
 <<$metric.."Data__SparkPostMetrics">>
 </textarea>
+
+
 <<//$metric..@SetProperty("Data__SparkPostMetrics", $metrics..@ToJSON())>>
