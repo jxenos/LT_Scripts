@@ -17,9 +17,9 @@
 
 <<@SetEventElement($eventId,"URL", $url)>>
 
-<<@SetEventElement($eventId,"Timeout", 9999999)>>
-<<@SetEventElement($eventId,"Priority", 999999)>>
 */>>
+<<@SetEventElement($eventId,"Timeout", 99999)>>
+<<@SetEventElement($eventId,"Priority", 999999)>>
 
 
 <<@SetEventElement($eventId,"Scheduled",@Now)>>
