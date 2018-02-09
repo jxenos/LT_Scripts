@@ -9,16 +9,29 @@
 
 <<New Object $contactsCloud>>
 <<New Object $contacts>>
-<<New Number $t>>
-<<New Number $z>>
+<<New Number $totalBad>>
+<<New Number $totalUnfixable>>
+<<New Text $justFIs>>
+<<New Text $analyzeData>>
+<<New Text $emailAddress>>
+<<New Text $processData>>
+
+<<For:FIs Var=$x Start=211 End=211 >>
 <<// $FIs..@Length>>
-<<For:FIs Var=$x Start=216 End=216 >>
 <<$x>> <<$FIs..($x).."Formatted Name">></br>
-	<<$t=0>>
-	<<$z=0>>
+	<<$totalBad=0>>
+	<<$totalUnfixable=0>>
+
+
+	<<// clouds>>
 	<<$FIs..($x)..Object..@GetCloud($Name="Contacts", $Cloud=$contactsCloud)>>
 
-	<<$contactsCloud..@Id>>
+<textarea>
+<<$contactsCloud..@Id>>
+</textarea>
+
+	<<$justFIs = "false">>
+	<<If:justFIs ($justFIs == "false")>>
 	<<If:contacts ($contactsCloud..@Id)>>
 		<<$FIs..($x)..Object..@Id>></br>
 		<<$FIs..($x)..Intersection..@Id>></br>
@@ -28,9 +41,42 @@
 
 		<<For:contacts Var=$i Start=1 End=$contacts..@Length>>
 			<<If:emailinname (($contacts..($i)..Object.."Formatted Name"..@Contains("@")) || ($contacts..($i)..Intersection.."Formatted Name"..@Contains("@")))>>
-					<<@Inc($t)>>
+					<<@Inc($totalBad)>>
 				<<If:both (($contacts..($i)..Object.."Formatted Name"..@Contains("@") > 0) && ($contacts..($i)..Intersection.."Formatted Name"..@Contains("@") > 0))>>
-					<<@Inc($z)>>
+
+					<<$analyzeData = "false">>
+					<<If:setBadData ($analyzeData == "true")>>
+						<<do $contactsCloud..@SetProperty("Data - Text__NoNameUserIds", $contactsCloud..("Data - Text__NoNameUserIds") + $contacts..($i)..Object..@Id + "||", 0)>>
+						<<do $contactsCloud..@SetProperty("Data - Text__NoNameUserIntersectionIds", $contactsCloud..("Data - Text__NoNameUserIntersectionIds") + $contacts..($i)..Intersection..@Id + "||", 0)>>
+						<<do $contactsCloud..@SetProperty("Data - Text__EmailsWithNoName", $contactsCloud..("Data - Text__EmailsWithNoName") + $contacts..($i)..Object..@Name + "||", 0)>>
+					<</If:setBadData>>
+
+					<<$processData = "true">>
+					<<If:processData ($processData == "true")>>
+
+						<<$contacts..($i)..Object..@GetFieldValue($Name = "Email Address", $Value = $emailAddress)>>
+
+						<<If:duplicateUserEmail (!($contactsCloud..("Data - Text__NoNameUserIds")..@Contains($contacts..($i)..Object..@Id)) && ($contactsCloud..("Data - Text__EmailsWithNoName")..@Contains(@AsText($emailAddress))))>>
+							object<br/>
+
+
+						<</If:duplicateUserEmail>>
+						<<$emailAddress="">>
+						<<$contacts..($i)..Intersection..@GetFieldValue($Name = "Email Address", $Value = $emailAddress)>>
+
+						<<If:duplicateUserEmail (!($contactsCloud..("Data - Text__NoNameUserIntersectionIds")..@Contains($contacts..($i)..Intersection..@Id)) && ($contactsCloud..("Data - Text__EmailsWithNoName")..@Contains(@AsText($emailAddress))))>>
+							intersection<br/>
+
+						<</If:duplicateUserEmail>>
+						<<$emailAddress="">>
+
+
+					<</If:processData>>
+
+
+
+
+					<<@Inc($totalUnfixable)>>
 				<<Else:both>>
 					Object:			 <<$contacts..($i)..Object.."Formatted Name">><br>
 					Intersection:	 <<$contacts..($i)..Intersection.."Formatted Name">><br>
@@ -38,9 +84,11 @@
 			<</If:emailinname>>
 
 			<</For:contacts>>
-		Total that contain at sign <<$t>><br>
-		Both <<$z>><br>
+		Total that contain at sign <<$totalBad>><br>
+		Both <<$totalUnfixable>><br>
 	<</If:contacts>>
 
 
+
+	<</If:justFIs>>
 <</For:FIs>>
